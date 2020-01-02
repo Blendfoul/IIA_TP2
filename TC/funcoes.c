@@ -31,7 +31,7 @@ Grafo * InicializaArrayGrafos(char *nomeFicheiro, int *vertices, int *arestas, i
     return grafoTemp;
 }
 
-Grafo * CriaArrayVazio(const int *nLinhas){
+Grafo * CriaArrayVazio(const int *nLinhas) {
 	Grafo *grafo = NULL;
 
 	grafo = malloc(sizeof(Grafo) * (*nLinhas));
@@ -46,6 +46,13 @@ Grafo * CriaArrayVazio(const int *nLinhas){
 	}
 	
 	return grafo;
+}
+
+void CopiaArray(Grafo *destino, const Grafo *origem, const *nLinhas) {
+	for(int i = 0; i < (*nLinhas); nLinhas++){
+		destino[i].origem = origem[i].origem;
+		destino[i].destino = origem[i].destino;
+	}
 }
 
 int CriaFicheiroCSV(const char *nomeficheiro, Grafo * pointer, const int *nLinhas, const int * nIteracoes, const int *resultadoAlvo, const time_t * time) {

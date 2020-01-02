@@ -3,13 +3,13 @@
 
 int main(int argc, char const *argv[])
 {
-    int nIter;
+    int nIterMax;
     char nomeFich[100], ficheiroCsv[100];
 
     if (argc == 1)
     {
         strcpy(ficheiroCsv, "Teste.csv");
-        nIter DEFALT_ITERS;
+        nIterMax DEFALT_ITERS;
         if (strlen(argv[0]) >= 100)
         {
             printf("Nome do ficheiro demasiado grande!");
@@ -22,11 +22,11 @@ int main(int argc, char const *argv[])
     {
         if (atoi(argv[1]) <= 0)
         {
-            nIter DEFALT_ITERS;
+            nIterMax DEFALT_ITERS;
             printf("Numero invalido a correr com iteracoes predefinidas.");
         }
         else
-            nIter = atoi(argv[1]);
+            nIterMax = atoi(argv[1]);
         if (strlen(argv[0]) >= 100)
         {
             printf("Nome do ficheiro demasiado grande!");
@@ -34,17 +34,17 @@ int main(int argc, char const *argv[])
         }
         else
             strcpy(nomeFich, argv[1]);
-            strcpy(ficheiroCsv, "Teste.csv");
-
+        strcpy(ficheiroCsv, "Teste.csv");
     }
-    else if(argc == 3){
+    else if (argc == 3)
+    {
         if (atoi(argv[1]) <= 0)
         {
-            nIter DEFALT_ITERS;
+            nIterMax DEFALT_ITERS;
             printf("Numero invalido a correr com iteracoes predefinidas.");
         }
         else
-            nIter = atoi(argv[1]);
+            nIterMax = atoi(argv[1]);
         if (strlen(argv[0]) >= 100)
         {
             printf("Nome do ficheiro demasiado grande!");
@@ -69,41 +69,62 @@ int main(int argc, char const *argv[])
     }
 
     Grafo *dadosGrafo = NULL, *grafoAlvo = NULL;
-    int nVertices, nArestas, nLinhas, flagPrimeiraTentativa = 0;
+    int nVertices, nArestas, nLinhas, flagPrimeiraTentativa = 0, nIter, nIterAlvo;
     double resultadoAlvo, valorAtual, valorMinimo, valorMaximo;
-    time_t sTimes;
-	Random();
+    time_t sTime, fTime;
+    Random();
 
     dadosGrafo = InicializaArrayGrafos(nomeFich, &nVertices, &nArestas, &nLinhas);
 
-    if(dadosGrafo != NULL){
-        sTimes = NULL;
-        
+    if (dadosGrafo != NULL)
+    {
+        sTime = NULL;
+
         grafoAlvo = CriaArrayVazio(&nLinhas);
-        if(grafoAlvo == NULL)
+        if (grafoAlvo == NULL)
             return 1;
-        
-        if(CriaFicheiroCSV(ficheiroCsv, dadosGrafo, &nLinhas, &nIter, 0, &sTimes)){
+
+        if (CriaFicheiroCSV(ficheiroCsv, dadosGrafo, &nLinhas, &nIterMax, 0, &sTime))
+        {
             free(dadosGrafo);
             free(grafoAlvo);
             return 1;
         }
 
-
-        do
+        for (nIter = 0; nIter < nIterMax; nIter++)
         {
-            if(valorAtual > resultadoAlvo){
+            do
+            {
+                if (valorAtual > resultadoAlvo)
+                {
+                    break; //TODO: Remover e implementar lógica
+                }
+                else if (valorAtual < resultadoAlvo)
+                {
+                    break; //TODO: Remover e implementar lógica
+                }
+            } while (valorAtual != resultadoAlvo);
 
+            if(ExportaResultadoLinhaCSV(ficheiroCsv, dadosGrafo, &nLinhas, &nIter, 0)){
+                free(dadosGrafo);
+                free(grafoAlvo);
+                return 1;
             }
-            else if(valorAtual < resultadoAlvo){
+        }
 
+        fTime = time(NULL);
+	    fTime -= sTime;
+
+        if(ExportaResultadoLinhaCSV(ficheiroCsv, grafoAlvo, &nLinhas, &nIterAlvo, 0)){
+                free(dadosGrafo);
+                free(grafoAlvo);
+                return 1;
             }
-        } while (valorAtual != resultadoAlvo);
-        
-        /*for(int i = 0; i < nLinhas; i++)
-            printf("Origem: %d\tDestino: %d\n", dadosGrafo[i].origem, dadosGrafo[i].destino);*/
+
+        printf("Mellor Combinacao encontrada -> ");
     }
-    else{
+    else
+    {
         perror("Valor de dadosGrafo invalido: ");
         return 1;
     }
