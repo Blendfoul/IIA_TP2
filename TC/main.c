@@ -3,68 +3,72 @@
 
 int main(int argc, char const *argv[])
 {
-    int nIterMax;
+    int nIterMax, debug = 1;
     char nomeFich[100], ficheiroCsv[100];
 
-    if (argc == 1)
+    if(debug == 1)
+        printf("argc -> %d\nargv[0]-> %s\n", argc, argv[0]);
+
+
+    if (argc == 2)
     {
         strcpy(ficheiroCsv, "Teste.csv");
         nIterMax DEFALT_ITERS;
-        if (strlen(argv[0]) >= 100)
+        if (strlen(argv[1]) >= 100)
         {
-            printf("Nome do ficheiro demasiado grande!");
+            printf("Nome do ficheiro demasiado grande!\n");
             return 1;
         }
         else
             strcpy(nomeFich, argv[1]);
     }
-    else if (argc == 2)
+    else if (argc == 3)
     {
-        if (atoi(argv[1]) <= 0)
+        if (atoi(argv[2]) <= 0)
         {
             nIterMax DEFALT_ITERS;
-            printf("Numero invalido a correr com iteracoes predefinidas.");
+            printf("Numero invalido a correr com iteracoes predefinidas.\n");
         }
         else
             nIterMax = atoi(argv[1]);
-        if (strlen(argv[0]) >= 100)
+        if (strlen(argv[1]) >= 100)
         {
-            printf("Nome do ficheiro demasiado grande!");
+            printf("Nome do ficheiro demasiado grande!\n");
             return 1;
         }
         else
             strcpy(nomeFich, argv[1]);
         strcpy(ficheiroCsv, "Teste.csv");
     }
-    else if (argc == 3)
+    else if (argc == 4)
     {
-        if (atoi(argv[1]) <= 0)
+        if (atoi(argv[2]) <= 0)
         {
             nIterMax DEFALT_ITERS;
-            printf("Numero invalido a correr com iteracoes predefinidas.");
+            printf("Numero invalido a correr com iteracoes predefinidas.\n");
         }
         else
-            nIterMax = atoi(argv[1]);
-        if (strlen(argv[0]) >= 100)
+            nIterMax = atoi(argv[2]);
+        if (strlen(argv[1]) >= 100)
         {
-            printf("Nome do ficheiro demasiado grande!");
+            printf("Nome do ficheiro demasiado grande!\n");
             return 1;
         }
         else
             strcpy(nomeFich, argv[1]);
-        if (strlen(argv[2]) >= 100)
+        if (strlen(argv[3]) >= 100)
         {
-            printf("Nome do ficheiro csv demasiado grande!");
+            printf("Nome do ficheiro csv demasiado grande!\n");
             return 1;
         }
         else
-            strcpy(ficheiroCsv, argv[2]);
+            strcpy(ficheiroCsv, argv[3]);
     }
     else
     {
-        printf("Sintaxe: .\tc.exe <experiencia>");
-        printf("Sintaxe: .\tc.exe <experiencia> <iteracoes>");
-        printf("Sintaxe: .\tc.exe <experiencia> <iteracoes> <csv>");
+        printf("Sintaxe: .\\main.exe <experiencia>\n");
+        printf("Sintaxe: .\\main.exe <experiencia> <iteracoes>\n");
+        printf("Sintaxe: .\\main.exe <experiencia> <iteracoes> <csv>");
         return 1;
     }
 
@@ -74,11 +78,14 @@ int main(int argc, char const *argv[])
     time_t sTime, fTime;
     Random();
 
+    printf("Resultado alvo: ");
+    scanf("%lf", &resultadoAlvo);
+
     dadosGrafo = InicializaArrayGrafos(nomeFich, &nVertices, &nArestas, &nLinhas);
 
     if (dadosGrafo != NULL)
     {
-        sTime = NULL;
+        sTime = time(NULL);
 
         grafoAlvo = CriaArrayVazio(&nLinhas);
         if (grafoAlvo == NULL)
@@ -103,9 +110,12 @@ int main(int argc, char const *argv[])
                 {
                     break; //TODO: Remover e implementar lógica
                 }
+
+                if(valorAtual < resultadoAlvo )
+                break;
             } while (valorAtual != resultadoAlvo);
 
-            if(ExportaResultadoLinhaCSV(ficheiroCsv, dadosGrafo, &nLinhas, &nIter, 0)){
+            if(ExportaResultadoLinhaCSV(ficheiroCsv, dadosGrafo, &nLinhas, &nIter, 0, NULL)){
                 free(dadosGrafo);
                 free(grafoAlvo);
                 return 1;
@@ -115,7 +125,7 @@ int main(int argc, char const *argv[])
         fTime = time(NULL);
 	    fTime -= sTime;
 
-        if(ExportaResultadoLinhaCSV(ficheiroCsv, grafoAlvo, &nLinhas, &nIterAlvo, 0)){
+        if(ExportaResultadoLinhaCSV(ficheiroCsv, grafoAlvo, &nLinhas, &nIterAlvo, 0, &fTime)){
                 free(dadosGrafo);
                 free(grafoAlvo);
                 return 1;

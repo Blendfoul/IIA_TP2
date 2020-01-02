@@ -11,7 +11,7 @@ Grafo * InicializaArrayGrafos(char *nomeFicheiro, int *vertices, int *arestas, i
 		perror("Erro ao abrir o ficheiro:");
 		return grafoTemp;
 	}
-    fscanf(file, "%[^\n]s", comentario);
+    fscanf(file, "%%%%%[^\n]s", comentario);
 	printf("%s\n", comentario);
 	fscanf(file, "%d %d %d\n", vertices, arestas, nLinhas);
 
@@ -48,7 +48,7 @@ Grafo * CriaArrayVazio(const int *nLinhas) {
 	return grafo;
 }
 
-void CopiaArray(Grafo *destino, const Grafo *origem, const *nLinhas) {
+void CopiaArray(Grafo *destino, const Grafo *origem, const int *nLinhas) {
 	for(int i = 0; i < (*nLinhas); nLinhas++){
 		destino[i].origem = origem[i].origem;
 		destino[i].destino = origem[i].destino;
@@ -73,7 +73,7 @@ int CriaFicheiroCSV(const char *nomeficheiro, Grafo * pointer, const int *nLinha
 	return EXIT_SUCCESS;
 }
 
-int ExportaResultadoLinhaCSV(const char * fileName, Grafo * pointer, const int * nLinhas, const int *vertice, const int melhorResultado) {
+int ExportaResultadoLinhaCSV(const char * fileName, Grafo * pointer, const int * nLinhas, const int *vertice, const int melhorResultado, const time_t * time) {
 	FILE * temp = fopen(fileName, "a");
 	struct tm * timeInfo;
 
