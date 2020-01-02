@@ -1,15 +1,15 @@
 #include "../utils.h"
+#include "funcoes.h"
 
 int main(int argc, char const *argv[])
 {
-
     int nIter;
-    char nomeFich[40];
+    char nomeFich[100];
 
     if (argc == 1)
     {
         nIter DEFALT_ITERS;
-        if (strlen(argv[0] >= 40))
+        if (strlen(argv[0]) >= 100)
         {
             printf("Nome do ficheiro demasiado grande!");
             return 1;
@@ -19,13 +19,14 @@ int main(int argc, char const *argv[])
     }
     else if (argc == 2)
     {
-        if(argv[0] <= 0){
+        if (argv[0] <= 0)
+        {
             nIter DEFALT_ITERS;
-            printf("Numero invalido a correr com iteracoes predefinidas.")
+            printf("Numero invalido a correr com iteracoes predefinidas.");
         }
         else
-            nIter = argv[1];
-        if (strlen(argv[0] >= 40))
+            nIter = atoi(argv[1]);
+        if (strlen(argv[0]) >= 100)
         {
             printf("Nome do ficheiro demasiado grande!");
             return 1;
@@ -33,18 +34,26 @@ int main(int argc, char const *argv[])
         else
             strcpy(nomeFich, argv[1]);
     }
-}
-else
-{
-    printf("Sintaxe: .\tc.exe <experiencia>");
-    printf("Sintaxe: .\tc.exe <experiencia> <iteracoes>");
-    return 1;
-}
+    else
+    {
+        printf("Sintaxe: .\tc.exe <experiencia>");
+        printf("Sintaxe: .\tc.exe <experiencia> <iteracoes>");
+        return 1;
+    }
 
-FILE *file;
-file = fopen(argv[0], "r+");
+    Grafo *dadosGrafo = NULL;
+    int nVertices, nArestas, nLinhas;
 
-fclose(file);
+    dadosGrafo = InicializaArrayGrafos(nomeFich, &nVertices, &nArestas, &nLinhas);
 
-return 0;
+    if(dadosGrafo != NULL){
+        for(int i = 0; i < nLinhas; i++)
+            printf("Origem: %d\tDestino: %d\n", dadosGrafo[i].origem, dadosGrafo[i].destino);
+    }
+    else{
+        perror("Valor de dadosGrafo invalido: ");
+        return 1;
+    }
+
+    return 0;
 }
