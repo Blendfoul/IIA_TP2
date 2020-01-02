@@ -68,26 +68,47 @@ int main(int argc, char const *argv[])
         return 1;
     }
 
-    Grafo *dadosGrafo = NULL;
-    int nVertices, nArestas, nLinhas;
+    Grafo *dadosGrafo = NULL, *grafoAlvo = NULL;
+    int nVertices, nArestas, nLinhas, flagPrimeiraTentativa = 0;
+    double resultadoAlvo, valorAtual, valorMinimo, valorMaximo;
     time_t sTimes;
 	Random();
 
     dadosGrafo = InicializaArrayGrafos(nomeFich, &nVertices, &nArestas, &nLinhas);
 
     if(dadosGrafo != NULL){
+        sTimes = NULL;
+        
+        grafoAlvo = CriaArrayVazio(&nLinhas);
+        if(grafoAlvo == NULL)
+            return 1;
+        
+        if(CriaFicheiroCSV(ficheiroCsv, dadosGrafo, &nLinhas, &nIter, 0, &sTimes)){
+            free(dadosGrafo);
+            free(grafoAlvo);
+            return 1;
+        }
 
-        CriaFicheiroCSV(ficheiroCsv, dadosGrafo, &nLinhas, &nIter, 0, &sTimes);
 
-        for(int i = 0; i < nLinhas; i++)
-            printf("Origem: %d\tDestino: %d\n", dadosGrafo[i].origem, dadosGrafo[i].destino);
+        do
+        {
+            if(valorAtual > resultadoAlvo){
+
+            }
+            else if(valorAtual < resultadoAlvo){
+
+            }
+        } while (valorAtual != resultadoAlvo);
+        
+        /*for(int i = 0; i < nLinhas; i++)
+            printf("Origem: %d\tDestino: %d\n", dadosGrafo[i].origem, dadosGrafo[i].destino);*/
     }
     else{
         perror("Valor de dadosGrafo invalido: ");
         return 1;
     }
 
-
+    free(grafoAlvo);
     free(dadosGrafo);
     return 0;
 }

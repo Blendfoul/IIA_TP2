@@ -31,6 +31,23 @@ Grafo * InicializaArrayGrafos(char *nomeFicheiro, int *vertices, int *arestas, i
     return grafoTemp;
 }
 
+Grafo * CriaArrayVazio(const int *nLinhas){
+	Grafo *grafo = NULL;
+
+	grafo = malloc(sizeof(Grafo) * (*nLinhas));
+	if(!grafo){
+		perror("Erro ao alocar memória (CriaArrayVazio):");
+		return NULL;
+	}
+
+	for (int i = 0; i < (*nLinhas); i++)
+	{
+		grafo[i].origem = grafo[i].destino = 0;
+	}
+	
+	return grafo;
+}
+
 int CriaFicheiroCSV(const char *nomeficheiro, Grafo * pointer, const int *nLinhas, const int * nIteracoes, const int *resultadoAlvo, const time_t * time) {
 	FILE * temp = fopen(nomeficheiro, "a");
 
@@ -88,4 +105,8 @@ int ErroCSV(const char * fileName, const char * error) {
 
 void Random() {
 	srand((unsigned)time(NULL));
+}
+
+int Randomvalue(const int *min, const int *max){
+	return (*min) + rand() % ((*max) - (*min) + 1);
 }
