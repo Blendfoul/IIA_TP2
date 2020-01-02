@@ -30,3 +30,62 @@ Grafo * InicializaArrayGrafos(char *nomeFicheiro, int *vertices, int *arestas, i
 
     return grafoTemp;
 }
+
+int CriaFicheiroCSV(const char *nomeficheiro, Grafo * pointer, const int *nLinhas, const int * nIteracoes, const int *resultadoAlvo, const time_t * time) {
+	FILE * temp = fopen(nomeficheiro, "a");
+
+	if (!temp) {
+		perror("Erro abrir o ficheiro (CriaFicheiroCSV):");
+		return 1;
+	}
+
+	fprintf(temp, "%sTrepa Colinas;;Tentativas;%d;;"/*Falta aqui parametros*/, asctime(localtime(time)), (* nIteracoes));
+	for (int i = 0; i < (*nLinhas); i++) {
+		fprintf(temp, ";%d", pointer[i].origem);
+	}
+	fprintf(temp, ";Fitness\n");
+
+	fclose(temp);
+	return EXIT_SUCCESS;
+}
+
+int ExportaResultadoLinhaCSV(const char * fileName, Grafo * pointer, const int * nLinhas, const int *vertice, const int melhorResultado) {
+	FILE * temp = fopen(fileName, "a");
+	struct tm * timeInfo;
+
+	if (!temp) {
+		perror("Erro abrir o ficheiro (exportCSVRowResult):");
+		return EXIT_FAILURE;
+	}
+	if (melhorResultado) {
+		fprintf(temp, "\nMelhor Resultado\n");
+	}
+	fprintf(temp, "#%d", (* vertice) + 1);
+	for (int i = 0; i < (* nLinhas); i++) {
+		fprintf(temp, ";%d", pointer[i].origem);
+	}
+	//fprintf(temp, ";%d\n", fitnessCheck(pointer, nLinhas));
+	if (melhorResultado) {
+		timeInfo = localtime(time);
+		fprintf(temp, "Tempo decorrido:;%d:%d:%d\n\n", timeInfo->tm_hour, timeInfo->tm_min, timeInfo->tm_sec);
+	}
+	fclose(temp);
+	return EXIT_SUCCESS;
+}
+
+int ErroCSV(const char * fileName, const char * error) {
+	FILE * temp = fopen(fileName, "a");
+	
+	if (!temp) {
+		perror("Erro abrir o ficheiro (errorCSV):");
+		return EXIT_FAILURE;
+	}
+
+	fprintf(temp, error);
+	fclose(temp);
+	return EXIT_SUCCESS;
+}
+
+void Random() {
+	srand((unsigned)time(NULL));
+}
