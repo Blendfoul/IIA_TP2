@@ -89,7 +89,7 @@ int ExportaResultadoLinhaCSV(const char * fileName, Grafo * pointer, const int *
 		fprintf(temp, ";%d", pointer[i].origem);
 	}
 	
-	fprintf(temp, ";%d\n", VerificarFitness(pointer, nLinhas));
+	fprintf(temp, ";%d\n", VerificaFitness(pointer, nLinhas));
 	if (melhorResultado) {
 		timeInfo = localtime(time);
 		fprintf(temp, "Tempo decorrido:;%d:%d:%d\n\n", timeInfo->tm_hour, timeInfo->tm_min, timeInfo->tm_sec);
