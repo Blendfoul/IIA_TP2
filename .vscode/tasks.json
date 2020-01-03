@@ -11,11 +11,20 @@
                 "-g",
                 "${file}",
                 "${fileDirname}\\funcoes.c",
+                "${workspaceFolder}/utils.c",
                 "-o",
                 "${fileDirname}\\${fileBasenameNoExtension}.exe"
             ],
             "options": {
                 "cwd": "C:\\MinGW\\bin"
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
             },
             "problemMatcher": [
                 "$gcc"

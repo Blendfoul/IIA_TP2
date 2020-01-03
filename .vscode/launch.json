@@ -23,7 +23,8 @@
                     "ignoreFailures": true
                 }
             ],
-            "preLaunchTask": "gcc Active Project"
+            "preLaunchTask": "gcc Active Project",
+            "windows": {"filterStdout": true}
         }
     ]
 }

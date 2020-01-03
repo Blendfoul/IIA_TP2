@@ -4,16 +4,16 @@ Grafo * InicializaArrayGrafos(char *nomeFicheiro, int *vertices, int *arestas, i
     Grafo *grafoTemp = NULL;
     FILE *file;
 	char comentario[100];
-
     file = fopen(nomeFicheiro, "r+");
 
     if (!file) {
 		perror("Erro ao abrir o ficheiro:");
 		return grafoTemp;
 	}
-    fscanf(file, "%%%%%[^\n]s", comentario);
+    fscanf(file, "%%%%%[^\n]s\n", comentario);
 	printf("%s\n", comentario);
 	fscanf(file, "%d %d %d\n", vertices, arestas, nLinhas);
+	printf("Vertices: %d\tArestas: %d\tnLinhas: %d\n", *vertices, *arestas, *nLinhas);
 
 	grafoTemp = malloc(sizeof(Grafo) * (*nLinhas));
 	if (!grafoTemp) {
@@ -119,8 +119,12 @@ int Randomvalue(const int *min, const int *max) {
 	return (*min) + rand() % ((*max) - (*min) + 1);
 }
 
-int VerificaFitness(const Grafo *grafo, const int *nLinhas) {
+int VerificaFitness(const Grafo *grafo, const int *nLinhas, const int *vert) {
 	int soma = 0;
-
+	for (size_t i = 0; i < count; i++)
+	{
+		/* code */
+	}
+	
 	return soma;
 }
