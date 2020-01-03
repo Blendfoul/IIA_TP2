@@ -12,8 +12,9 @@ Grafo * InicializaArrayGrafos(char *nomeFicheiro, int *vertices, int  *arestas, 
 Grafo * CriaArrayVazio(const int *nLinhas);
 void CopiaArray(Grafo *destino, const Grafo *origem, const int *nLinhas);
 int CriaFicheiroCSV(const char *nomeficheiro, Grafo * pointer, const int *nLinhas, const int * nIteracoes, const int *resultadoAlvo, const time_t * time);
-int ExportaResultadoLinhaCSV(const char * fileName, Grafo * pointer, const int * nLinhas, const int *vertice, const int melhorResultado, const time_t * time);
+int ExportaResultadoLinhaCSV(const char * fileName, Grafo * pointer, const int * nLinhas, const int *vertice, const int melhorResultado, const time_t * time, const int *debug);
 int ErroCSV(const char * fileName, const char * error);
-int VerificaFitness(const Grafo *grafo, const int *nLinhas);
+int VerificaFitness(const Grafo *grafo, const int *nLinhas, const int *vetice, const int *debug);
+int Modulo(const int *origem, const int *destino, const int *debug);
 
 #endif

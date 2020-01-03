@@ -3,7 +3,7 @@
 
 int main(int argc, char const *argv[])
 {
-    int nIterMax, debug = 1;
+    int nIterMax, debug = 0;
     char nomeFich[100], ficheiroCsv[100];
 
     argc = 4;
@@ -36,27 +36,27 @@ int main(int argc, char const *argv[])
             return 1;
         }
 
-        if(debug)
+        if(debug){
             for (int i = 0; i < nLinhas; i++)
                 printf("Origem: %d\tDestino: %d\n", dadosGrafo[i].origem, dadosGrafo[i].destino);
+
+            printf("Custo: %d\n", VerificaFitness(dadosGrafo, &nLinhas, &dadosGrafo[74].origem, &debug));
+        }
+
         
-        custo = VerificaFitness(dadosGrafo, &nLinhas);
-
-        for (nIter = 0; nIter < nIterMax; nIter++)
+        /*for (nIter = 0; nIter < nIterMax; nIter++)
         {
-            
-
             if(ExportaResultadoLinhaCSV(ficheiroCsv, dadosGrafo, &nLinhas, &nIter, 0, NULL)){
                 free(dadosGrafo);
                 free(grafoAlvo);
                 return 1;
             }
-        }
+        }*/
 
         fTime = time(NULL);
 	    fTime -= sTime;
 
-        if(ExportaResultadoLinhaCSV(ficheiroCsv, grafoAlvo, &nLinhas, &nIterAlvo, 0, &fTime)){
+        if(ExportaResultadoLinhaCSV(ficheiroCsv, grafoAlvo, &nLinhas, &nIterAlvo, 0, &fTime, &debug)){
                 free(dadosGrafo);
                 free(grafoAlvo);
                 return 1;
