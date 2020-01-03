@@ -98,29 +98,29 @@ int main(int argc, char const *argv[])
             return 1;
         }
 
-        for (nIter = 0; nIter < nIterMax; nIter++)
-        {
-            do
+        if(!debug)
+            for (nIter = 0; nIter < nIterMax; nIter++)
             {
-                if (valorAtual > resultadoAlvo)
+                do
                 {
-                    break; //TODO: Remover e implementar lógica
-                }
-                else if (valorAtual < resultadoAlvo)
-                {
-                    break; //TODO: Remover e implementar lógica
-                }
+                    if (valorAtual > resultadoAlvo)
+                    {
+                        break; //TODO: Remover e implementar lógica
+                    }
+                    else if (valorAtual < resultadoAlvo)
+                    {
+                        break; //TODO: Remover e implementar lógica
+                    }
+                    if(valorAtual < resultadoAlvo )
+                        break;
+                } while (valorAtual != resultadoAlvo);
 
-                if(valorAtual < resultadoAlvo )
-                break;
-            } while (valorAtual != resultadoAlvo);
-
-            if(ExportaResultadoLinhaCSV(ficheiroCsv, dadosGrafo, &nLinhas, &nIter, 0, NULL)){
-                free(dadosGrafo);
-                free(grafoAlvo);
-                return 1;
+                if(ExportaResultadoLinhaCSV(ficheiroCsv, dadosGrafo, &nLinhas, &nIter, 0, NULL)){
+                    free(dadosGrafo);
+                    free(grafoAlvo);
+                    return 1;
+                }
             }
-        }
 
         fTime = time(NULL);
 	    fTime -= sTime;

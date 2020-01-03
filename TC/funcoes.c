@@ -88,7 +88,8 @@ int ExportaResultadoLinhaCSV(const char * fileName, Grafo * pointer, const int *
 	for (int i = 0; i < (* nLinhas); i++) {
 		fprintf(temp, ";%d", pointer[i].origem);
 	}
-	//fprintf(temp, ";%d\n", fitnessCheck(pointer, nLinhas));
+	
+	fprintf(temp, ";%d\n", VerificarFitness(pointer, nLinhas));
 	if (melhorResultado) {
 		timeInfo = localtime(time);
 		fprintf(temp, "Tempo decorrido:;%d:%d:%d\n\n", timeInfo->tm_hour, timeInfo->tm_min, timeInfo->tm_sec);
@@ -97,7 +98,7 @@ int ExportaResultadoLinhaCSV(const char * fileName, Grafo * pointer, const int *
 	return EXIT_SUCCESS;
 }
 
-int ErroCSV(const char * fileName, const char * error) {
+int ErroCSV(const char *fileName, const char *error) {
 	FILE * temp = fopen(fileName, "a");
 	
 	if (!temp) {
@@ -114,6 +115,12 @@ void Random() {
 	srand((unsigned)time(NULL));
 }
 
-int Randomvalue(const int *min, const int *max){
+int Randomvalue(const int *min, const int *max) {
 	return (*min) + rand() % ((*max) - (*min) + 1);
+}
+
+int VerificaFitness(const Grafo *grafo, const int *nLinhas) {
+	int soma = 0;
+
+	return soma;
 }
